@@ -3,6 +3,7 @@ import HeroSection from "@/components/home/HeroSection";
 import HowItWorks from "@/components/home/HowItWorks";
 import PopularCategories from "@/components/home/PopularCategories";
 import Statistics from "@/components/home/Statistics";
+import Testimonials from "@/components/home/Testimonials";
 import TopFreelancers from "@/components/home/TopFreelancers";
 
 
@@ -15,6 +16,7 @@ export default function Home() {
       <TopFreelancers/>
       <HowItWorks/>
       <Statistics/>
+      <Testimonials/>
     </main>
   );
 }
