@@ -55,7 +55,7 @@ export default function FeaturedTasks() {
                 <span>{task.deadline}</span>
               </div>
 
-              <button className="mt-5 w-full bg-blue-600 text-white py-2 rounded-lg">
+              <button className="mt-5 w-full bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold hover:scale-105 transition py-2 rounded-lg">
                 View Details
               </button>
             </div>
