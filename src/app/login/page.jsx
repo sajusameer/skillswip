@@ -29,91 +29,163 @@ export default function LoginPage() {
     });
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+ 
+// const handleLogin = async (e) => {
+ 
+// e.preventDefault();
 
-    setError("");
+//   setError("");
 
-    if (!formData.email || !formData.password) {
-      return setError("Please fill in all fields.");
-    }
-
-    // try {
-    //   setLoading(true);
-
-    //   // Better Auth Login
-    //   await signIn.email({
-    //     email: formData.email,
-    //     password: formData.password,
-    //   });
-
-    //   // Get User Role
-    //   const { data } = await axiosInstance.get(
-    //     `/users/${formData.email}`
-    //   );
-
-    //   if (data?.role === "admin") {
-    //     router.push("/dashboard/admin");
-    //   } else if (data?.role === "freelancer") {
-    //     router.push("/dashboard/freelancer");
-    //   } else {
-    //     router.push("/");
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    //   setError("Invalid email or password.");
-    // } finally {
-    //   setLoading(false);
-    // }
-    try {
-  setLoading(true);
-
-  const result = await signIn.email({
-    email: formData.email,
-    password: formData.password,
-  });
-
-  console.log("Login Result:", result);
-
-  const { data } = await axiosInstance.get(`/users/${formData.email}`);
-router.push('/')
-//   if (data?.role === "admin") {
-//     router.push("/dashboard/admin");
-//   } else if (data?.role === "freelancer") {
-//     router.push("/dashboard/freelancer");
-//   } else {
-//     router.push("/");
+//   if (!formData.email || !formData.password) {
+//     return setError("Please fill in all fields.");
 //   }
-// test@test.com || TestTest$1
 
-} catch (err) {
-  console.log("========== LOGIN ERROR ==========");
-  console.log(err);
-  console.log("message:", err?.message);
-  console.log("response:", err?.response?.data);
+//   try {
+//     setLoading(true);
 
-  setError(err?.response?.data?.message || err?.message || "Login failed");
-} finally {
-  setLoading(false);
-}
-  };
+//     // Better Auth Login
+//     await signIn.email({
+//       email: formData.email,
+//       password: formData.password,
+//     });
 
-  const handleGoogleLogin = async () => {
-    try {
-      setGoogleLoading(true);
+//     // Get user role from your users collection
+//     const { data } = await axiosInstance.get(`/users/${formData.email}`);
 
-      await signIn.social({
-        provider: "google",
-        callbackURL: "/",
-      });
-    } catch (err) {
-      console.log(err);
-      setError("Google Login Failed.");
-    } finally {
-      setGoogleLoading(false);
+//     // Save role for dashboard
+//     localStorage.setItem("userRole", data.role);
+
+//     // Refresh session
+//     router.refresh();
+
+//     // Redirect
+//     if (data.role === "admin") {
+//       router.push("/dashboard/admin");
+//     } else if (data.role === "freelancer") {
+//       router.push("/dashboard/freelancer");
+//     } else {
+//       router.push("/dashboard/client");
+//     }
+
+//   } catch (err) {
+//     console.log(err);
+//     setError(
+//       err?.response?.data?.message ||
+//       err?.message ||
+//       "Invalid email or password."
+//     );
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+
+
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     setGoogleLoading(true);
+
+  //     await signIn.social({
+  //       provider: "google",
+  //       callbackURL: "/",
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     setError("Google Login Failed.");
+  //   } finally {
+  //     setGoogleLoading(false);
+  //   }
+  // };
+
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  setError("");
+
+  if (!formData.email || !formData.password) {
+    setError("Please fill in all fields.");
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    // Better Auth Login
+    const result = await signIn.email({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (result?.error) {
+      setError(result.error.message);
+      return;
     }
-  };
 
+    // Get user from backend
+    const { data } = await axiosInstance.get(`/users/${formData.email}`);
+
+    // Save role
+    localStorage.setItem("userRole", data.role);
+
+    router.refresh();
+
+    switch (data.role) {
+      case "admin":
+        router.replace("/dashboard/admin");
+        break;
+
+      case "freelancer":
+        router.replace("/dashboard/freelancer");
+        break;
+
+      default:
+        router.replace("/dashboard/client");
+    }
+  } catch (err) {
+    console.error(err);
+
+    setError(
+      err?.response?.data?.message ||
+        err?.message ||
+        "Invalid email or password."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+// const handleGoogleLogin = async () => {
+//   try {
+//     setGoogleLoading(true);
+
+//     await signIn.social({
+//       provider: "google",
+//       callbackURL: "/",
+//     });
+
+//   } catch (err) {
+//     console.log(err);
+//     setError("Google Login Failed.");
+//   } finally {
+//     setGoogleLoading(false);
+//   }
+// };
+
+const handleGoogleLogin = async () => {
+  try {
+    setGoogleLoading(true);
+
+    await signIn.social({
+      provider: "google",
+      callbackURL: "/dashboard",
+    });
+  } catch (err) {
+    console.error(err);
+    setError("Google Login Failed.");
+  } finally {
+    setGoogleLoading(false);
+  }
+};
   return (
     <section className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-violet-50 flex items-center justify-center px-4 py-12">
 
@@ -255,3 +327,5 @@ router.push('/')
     </section>
   );
 }
+
+// test@test.com || TestTest$1

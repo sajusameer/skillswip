@@ -64,12 +64,12 @@ export default function AppNavbar() {
               Browse Tasks
             </Link>
 
-            <Link
-              href="/freelancers"
-              className="hover:text-blue-600 transition"
-            >
-              Freelancers
-            </Link>
+           <Link
+            href="/freelancers"
+            className="hover:text-blue-600"
+          >
+            Browse Freelancers
+          </Link>
 
           </div>
 
@@ -103,7 +103,7 @@ export default function AppNavbar() {
                 </Link>
 
                 <Avatar
-                  src={user.image}
+                  src={user.image || undefined}
                   name={user.name}
                   size="sm"
                   className="cursor-pointer"

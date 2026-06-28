@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button, RadioGroup, Radio } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { FcGoogle } from "react-icons/fc";
 import { motion } from "framer-motion";
 import { signIn, signUp } from "@/lib/auth-client";
@@ -31,66 +31,168 @@ export default function RegisterPage() {
     });
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+//  const handleRegister = async (e) => {
+//   e.preventDefault();
 
-    setError("");
+//   setError("");
 
-    const { name, email, image, password } = formData;
+//   const { name, email, image, password } = formData;
 
-    if (!name || !email || !password) {
-      return setError("Please fill all required fields.");
+//   if (!name || !email || !password) {
+//     return setError("Please fill all required fields.");
+//   }
+
+//   if (password.length < 6) {
+//     return setError("Password must be at least 6 characters.");
+//   }
+
+//   if (!/[A-Z]/.test(password)) {
+//     return setError(
+//       "Password must contain at least one uppercase letter."
+//     );
+//   }
+
+//   if (!/[a-z]/.test(password)) {
+//     return setError(
+//       "Password must contain at least one lowercase letter."
+//     );
+//   }
+
+//   try {
+//     setLoading(true);
+
+//     // Create Better Auth account
+//     await signUp.email({
+//       name,
+//       email,
+//       password,
+//       image,
+//     });
+
+//     // Save role in your users collection
+//     await axiosInstance.post("/users", {
+//       name,
+//       email,
+//       image,
+//       role,
+//     });
+
+//     // Login automatically
+//     await signIn.email({
+//       email,
+//       password,
+//     });
+
+//     // Save role for dashboard
+//     localStorage.setItem("userRole", role);
+
+//     router.refresh();
+
+//     if (role === "admin") {
+//       router.push("/dashboard/admin");
+//     } else if (role === "freelancer") {
+//       router.push("/dashboard/freelancer");
+//     } else {
+//       router.push("/dashboard/client");
+//     }
+//   } catch (err) {
+//     console.log(err);
+
+//     setError(
+//       err?.response?.data?.message ||
+//         err?.message ||
+//         "Registration failed."
+//     );
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+ const handleRegister = async (e) => {
+  e.preventDefault();
+
+  setError("");
+
+  const { name, email, image, password } = formData;
+
+  if (!name || !email || !password) {
+    return setError("Please fill all required fields.");
+  }
+
+  if (password.length < 6) {
+    return setError("Password must be at least 6 characters.");
+  }
+
+  if (!/[A-Z]/.test(password)) {
+    return setError(
+      "Password must contain at least one uppercase letter."
+    );
+  }
+
+  if (!/[a-z]/.test(password)) {
+    return setError(
+      "Password must contain at least one lowercase letter."
+    );
+  }
+
+  try {
+    setLoading(true);
+
+    // Better Auth Register
+    const result = await signUp.email({
+      name,
+      email,
+      password,
+      image,
+    });
+
+    if (result?.error) {
+      setError(result.error.message);
+      return;
     }
 
-    if (password.length < 6) {
-      return setError("Password must be at least 6 characters.");
+    // Save user in your backend
+    await axiosInstance.post("/users", {
+      name,
+      email,
+      image,
+      role,
+    });
+
+    // Auto Login
+    await signIn.email({
+      email,
+      password,
+    });
+
+    localStorage.setItem("userRole", role);
+
+    router.refresh();
+
+    switch (role) {
+      case "admin":
+        router.replace("/dashboard/admin");
+        break;
+
+      case "freelancer":
+        router.replace("/dashboard/freelancer");
+        break;
+
+      default:
+        router.replace("/dashboard/client");
     }
+  } catch (err) {
+    console.error(err);
 
-    if (!/[A-Z]/.test(password)) {
-      return setError(
-        "Password must contain at least one uppercase letter."
-      );
-    }
-
-    if (!/[a-z]/.test(password)) {
-      return setError(
-        "Password must contain at least one lowercase letter."
-      );
-    }
-
-    try {
-      setLoading(true);
-
-      await signUp.email({
-        name,
-        email,
-        password,
-        image,
-        callbackURL: "/",
-      });
-
-      await axiosInstance.post("/users", {
-        name,
-        email,
-        image,
-        role,
-        });
-
-        router.push(
-        role === "freelancer"
-            ? "/dashboard/freelancer"
-            : "/"
-        );
-
-      router.push("/");
-    } catch (err) {
-      setError(err?.message || "Registration failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
- const handleGoogle = async () => {
+    setError(
+      err?.response?.data?.message ||
+      err?.message ||
+      "Registration failed."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+const handleGoogle = async () => {
   try {
     await signIn.social({
       provider: "google",
