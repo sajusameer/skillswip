@@ -3,8 +3,9 @@ import {
   FaFacebookF,
   FaGithub,
   FaLinkedinIn,
-  FaTwitter,
+  
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -98,9 +99,9 @@ export default function Footer() {
 
               <a
                 href="#"
-                className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-sky-500 hover:text-white transition"
+                className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-gray-900 hover:text-white transition"
               >
-                <FaTwitter />
+                <FaXTwitter />
               </a>
 
               <a
