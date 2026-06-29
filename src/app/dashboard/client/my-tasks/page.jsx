@@ -184,11 +184,21 @@ export default function MyTasksPage() {
                         Delete
                       </button>
 
-                      <button
+                      {/* <button
                         className="bg-blue-600 text-white px-3 py-2 rounded-lg"
                       >
                         View Bids
-                      </button>
+                      </button> */}
+                       <button
+                        className="bg-blue-600 text-white px-3 py-2 rounded-lg"
+                      >
+                    <Link
+                    href={`/dashboard/client/proposals/${task._id}`}
+                    className="btn btn-info btn-sm"
+                  >
+                     View Bids
+                  </Link>
+                  </button>
 
                     </div>
 

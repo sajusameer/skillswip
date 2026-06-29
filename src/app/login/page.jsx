@@ -140,7 +140,7 @@ const handleLogin = async (e) => {
         break;
 
       default:
-        router.replace("/dashboard/client");
+        router.replace("/");
     }
   } catch (err) {
     console.error(err);
