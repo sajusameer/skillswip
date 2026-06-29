@@ -181,7 +181,7 @@ export default function AppNavbar() {
                 <div className="flex items-center gap-3">
 
                   <Avatar
-                    src={user.image || ""}
+                src={user.image || undefined}
                     name={user.name}
                   />
 
