@@ -184,6 +184,15 @@ export default function AppNavbar() {
                 src={user.image || undefined}
                     name={user.name}
                   />
+                  {/* <Avatar
+  src={user?.image || undefined}
+  name={user?.name || "User"}
+  showFallback
+/> */}      
+{/* <Avatar
+  name={user?.name || "User"}
+  size="sm"
+/> console.log(user); */}
 
                   <div>
 

@@ -143,6 +143,7 @@ export default function RegisterPage() {
       email,
       password,
       image,
+      role,
     });
 
     if (result?.error) {
