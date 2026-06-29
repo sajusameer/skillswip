@@ -247,7 +247,7 @@ export default function DashboardSidebar() {
     },
     {
       name: "Browse Tasks",
-      href: "/dashboard/freelancer/browse-tasks",
+      href: "/browse-tasks",
       icon: Search,
     },
     {

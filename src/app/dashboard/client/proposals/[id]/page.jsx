@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axiosInstance from "@/lib/axios";
 import { toast } from "react-hot-toast";
+import Link from "next/link";
 
 export default function ProposalPage() {
   const { id } = useParams();
@@ -133,7 +134,7 @@ const handleReject = async (id) => {
 
               </div>
 
-              <div className="flex gap-3 mt-8">
+              {/* <div className="flex gap-3 mt-8">
 
                 <button
                 onClick={() => handleAccept(bid._id)}
@@ -149,7 +150,48 @@ const handleReject = async (id) => {
                   Reject
                 </button>
 
-              </div>
+              </div> */}
+              <div className="flex gap-3 mt-8">
+
+  {bid.status === "pending" && (
+    <>
+      <button
+        onClick={() => handleAccept(bid._id)}
+        className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg"
+      >
+        Accept
+      </button>
+
+      <button
+        onClick={() => handleReject(bid._id)}
+        className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg"
+      >
+        Reject
+      </button>
+    </>
+  )}
+
+  {bid.status === "accepted" && (
+     <Link href={`/payment/${bid._id}`}>
+    <button
+    
+      className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg"
+    >
+      Pay Now
+    </button>
+    </Link>
+  )}
+
+  {bid.status === "rejected" && (
+    <button
+      disabled
+      className="bg-gray-400 text-white px-3 py-2 rounded-lg cursor-not-allowed"
+    >
+      Rejected
+    </button>
+  )}
+
+</div>
 
             </div>
 
