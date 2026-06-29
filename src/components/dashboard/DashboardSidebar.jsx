@@ -232,11 +232,11 @@ export default function DashboardSidebar() {
       href: "/dashboard/client/my-tasks",
       icon: ClipboardList,
     },
-    {
-      name: "Payments",
-      href: "/dashboard/client/payments",
-      icon: Wallet,
-    },
+    // {
+    //   name: "Payments",
+    //   href: "/dashboard/client/payments",
+    //   icon: Wallet,
+    // },
   ];
 
   const freelancerMenu = [
@@ -247,7 +247,7 @@ export default function DashboardSidebar() {
     },
     {
       name: "Browse Tasks",
-      href: "/freelancer/browse-tasks",
+      href: "/browse-tasks",
       icon: Search,
     },
     {
