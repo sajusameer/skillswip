@@ -255,6 +255,11 @@ export default function DashboardSidebar() {
       href: "/dashboard/freelancer/my-bids",
       icon: Briefcase,
     },
+    {
+      name: "My Profile",
+      href: "/dashboard/freelancer/profile",
+      icon: Users,
+    },
   ];
 
   const adminMenu = [

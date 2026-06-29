@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { toast } from "react-hot-toast";
+import Link from "next/link";
 
 export default function FreelancersPage() {
   const [freelancers, setFreelancers] = useState([]);
@@ -88,10 +89,12 @@ export default function FreelancersPage() {
                 </p>
 
                 <div className="mt-6">
-
-                  <button className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 py-3 text-white font-semibold">
+              <Link href={`/freelancers/${user._id}`}>
+                  <button className="w-full rounded-xl bg-gradient-to-r from-blue-600
+                   to-violet-600 py-3 text-white font-semibold">
                     View Profile
                   </button>
+                  </Link>
 
                 </div>
 
